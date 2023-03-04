@@ -1,5 +1,9 @@
-document.querySelector("form").addEventListener("submit", (e)=>{
-    e.preventDefault()
-    console.log(document.querySelector("#name").value)
-    console.log(document.querySelector("#birth-date").value);
-})
+const nome = document.querySelector("#name");
+
+function checkNameValidity(){
+    if (nome.validity.patternMismatch || nome.validity.tooShort){
+        nome.setCustomValidity("First nome");
+    } else{
+        nome.setCustomValidity("");
+    }
+}

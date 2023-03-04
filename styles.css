@@ -1,0 +1,33 @@
+*, 
+*:after,
+*:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+html{
+    margin:0;
+    padding:0;
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    font-size: 100%;
+    list-style-type: none;
+    height:80vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section h1{
+    text-align: center;
+}
+
+section button{
+    display:flex;
+    margin:auto;
+}
