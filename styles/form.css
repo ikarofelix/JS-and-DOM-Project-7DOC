@@ -1,0 +1,46 @@
+#section-form{
+    width:fit-content;
+    margin:auto;
+    margin-top:150px;
+
+    background: rgb(196, 193, 199);
+    padding:30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 2px rgb(136, 132, 141);
+}
+
+#section-form form{
+    margin:auto;
+    width:fit-content;
+}
+
+#section-form h1{
+    text-align: center;
+    margin-bottom:10px;
+}
+
+#section-form input{
+    display:block;
+    border-radius: 3px;
+    border:0;
+    padding:4px;
+    margin-bottom:10px;
+}
+
+#section-form button{
+    display: flex;
+    margin: auto;
+    margin-top:20px;
+    padding:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+#section-form button:focus{
+    padding:9px;
+    padding-left: 19px;
+    padding-right: 19px;
+}

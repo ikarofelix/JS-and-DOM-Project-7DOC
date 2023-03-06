@@ -1,0 +1,50 @@
+.people-sheets{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 40px repeat(1fr 1fr);
+    grid-template-areas: "title title"
+    "key key"
+    "value value";
+
+    width:500px;
+    margin:auto;
+    position:relative;
+    top:150px;
+
+    border:1px solid;
+}
+
+.sheets-title{
+    text-align: center;
+    grid-column: title;
+    background:yellow;
+    border:1px solid;
+}
+
+.sheets-key{
+    grid-row:key;
+    background:green;
+    margin:auto;
+    width:100%;
+    text-align: center;
+    border:1px solid;
+    font-weight: bold;
+}
+
+.sheets-name,
+.sheets-birth{
+    color:rgb(221, 210, 210);
+}
+
+.sheets-value{
+    grid-row:value;
+    background:red;
+    text-align: center;
+}
+
+.sheets-user,
+.sheets-date{
+    display:block;
+    border:1px solid;
+    font-weight: 500;
+}

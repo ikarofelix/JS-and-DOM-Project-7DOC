@@ -4,44 +4,27 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/styles/styles.css">
         <title>7DaysOfCode - JavaScript and DOM</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
     </head>
     <body>
-        <section>
+        <section id="section-form">
             <h1>Sign up</h1>
             <form action="#" class="form js-form">
                 <label for="name">
                     Name
                     <input oninvalid="checkNameValidity()" class="form-field js-field" id="name" minlength="3" maxlength="120" pattern="[A-Za-z]+" name="name" required type="text" title="Enter your first name">
-                </label><br>
+                </label>
                 <label for="birth-date">
                     Birth date
                     <input min='1899-01-01' class="form-field js-field" id="birth-date" name="birth-date" required type="date" title="Select your birth date">
-                </label><br>
+                </label>
                 <button type="submit">Save</button>
             </form>
         </section>
     </body>
-    <script src="/script.js"></script>
+    <script src="/scripts/script.js"></script>
 </html>
-
-
-
-<!-- Um nome precisa ter no mínimo três letras.
-Um nome pode ter no máximo 120 letras.
-Um nome pode apenas conter letras, e não números.
-
-A data de nascimento precisa estar no formato DD/MM/AAAA, por exemplo: 31/01/2021.
-O mês informado deve estar entre 01 e 12.
-
-Você pode aplicar várias validações com o próprio HTML5, utilizando atributos como: max, min, maxlength, minlength, pattern e required. Um exemplo:
-
-<input maxlength="50" required pattern="([aA-zZ]+)">
-
-Caso você queira personalizar a mensagem padrão de validação, você pode utilizar a função setCustomValidity.
-
-Lembrando que você pode personalizar a sua página da maneira que achar mais legal! -->
