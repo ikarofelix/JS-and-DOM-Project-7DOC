@@ -10,8 +10,6 @@
     margin:auto;
     position:relative;
     top:150px;
-
-    border:1px solid;
 }
 
 .sheets-title{
@@ -44,7 +42,46 @@
 
 .sheets-user,
 .sheets-date{
-    display:block;
+    display:flex;
+    justify-content: center;
     border:1px solid;
     font-weight: 500;
+}
+
+.edit-button{
+    margin:auto;
+    grid-column: title;
+    margin-top:30px;
+}
+
+.edit-button button{
+    background:rgb(169, 169, 184);
+    border:0;
+    padding:15px;
+    cursor:pointer;
+    border-radius:8px;
+}
+
+.sheets-user::before{
+    content:"";
+    background:white;
+    width:20px;
+    height:20px;
+    position: absolute;
+    margin-top:2px;
+    left:2px;
+}
+
+.active{
+    background:rgb(141, 49, 49);
+}
+
+.checkmark::after{
+    content: "";
+    background:blue;
+    width:20px;
+    height:20px;
+    position:absolute;
+    margin-top:2px;
+    left:2px;
 }

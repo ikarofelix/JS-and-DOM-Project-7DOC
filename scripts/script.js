@@ -2,8 +2,12 @@ const html = document,
       body = document.body,
       form = document.querySelector("form"),
       nameInput = document.querySelector("#name"),
-      birthDate = document.querySelector("#birth-date"); // YYYY-MM-DD
-     
+      birthDate = document.querySelector("#birth-date");
+
+let edit = false,
+    editValue = "",
+    editIndex = 0;
+
 window.onload = pageStart()
 
 function pageStart(){
@@ -12,6 +16,50 @@ function pageStart(){
     }
     birthDateMax()
 }
+
+const sheetsUser = document.querySelectorAll(".sheets-user"),
+      editBtn = document.querySelector(".edit-button");
+
+sheetsUser.forEach(element=>{
+    element.addEventListener("click", ()=>{
+        if (element.classList.contains("active")){
+            element.classList.remove("active","checkmark")
+        } else{
+        element.classList.add("active", "checkmark")
+        editIndex = Array.prototype.slice.call(sheetsUser).indexOf(element);
+        sheetsUser.forEach(e=>{
+            if (e!=element & e.classList.contains("active")){
+                e.classList.remove("active","checkmark")
+            }
+        })
+    }})
+})
+
+editBtn.addEventListener("click", ()=>{
+    const active = document.querySelector(".active")
+    if (!active){
+        alert("You must choose one person to edit it's values")
+    } else{
+        const textToEdit = (active.innerText)   
+        getLocalStor().forEach(person=>{
+            if (person.name.toLowerCase() === textToEdit.toLowerCase()){
+                nameInput.value = person.name;
+                birthDate.value = person.birthDate;
+                edit = true;
+                editValue = person.name;
+            }
+        })
+    }
+})
+
+form.addEventListener("submit", (e)=>{
+    const person = {"name":nameInput.value, "birthDate":birthDate.value}
+    if (!edit){
+        setToLocalStor(person)
+    } else{
+        editLocalStor(person, editValue, editIndex)
+    }
+})
 
 function checkNameValidity(){
     if (nameInput.validity.patternMismatch || nameInput.validity.tooShort){
@@ -38,10 +86,9 @@ function birthDateMax(){
     birthDate.setAttribute("max", today);
 }
 
-form.addEventListener("submit", ()=>{
-    const person = {"name":nameInput.value, "birthDate":birthDate.value}
-    setToLocalStor(person)
-})
+function getLocalStor(){
+    return JSON.parse(localStorage.getItem("peopleSheets"))
+}
 
 function setToLocalStor(person){
     if (!getLocalStor()){
@@ -50,14 +97,21 @@ function setToLocalStor(person){
         let peopleList = [];
         getLocalStor().forEach(p=>{
             peopleList.push(p)
-        })        
+        })
         peopleList.push(person);
         localStorage.setItem("peopleSheets", JSON.stringify(peopleList));
     }
 }
 
-function getLocalStor(){
-    return JSON.parse(localStorage.getItem("peopleSheets"))
+function editLocalStor(person, str, index){
+    const array = [];
+    getLocalStor().forEach(p=>{
+        array.push(p);
+        if (p.name === str & array.indexOf(p) === index){
+            array.splice(array.indexOf(p), 1, person);
+        }
+    })
+    localStorage.setItem("peopleSheets", JSON.stringify(array));
 }
 
 function capitalizeFirstLetter(str) {
@@ -77,7 +131,9 @@ function renderPeopleSheets(){
           spanBirth = document.createElement("span"),
           sheetsNameValue = document.createElement("div"),
           sheetsBirthValue = document.createElement("div"),
-          peopleSheetsReturn = getLocalStor();
+          peopleSheetsReturn = getLocalStor(),
+          editDiv = document.createElement("div"),
+          editButton = document.createElement("button");
 
     section.id = "people-sheets";
     section.classList.add("people-sheets");
@@ -115,26 +171,11 @@ function renderPeopleSheets(){
         sheetsBirthValue.appendChild(personBirth);
     });
 
-    section.appendChild(sheetsNameValue)
-    section.appendChild(sheetsBirthValue)
-}
+    section.appendChild(sheetsNameValue);
+    section.appendChild(sheetsBirthValue);
 
-/*
-------------renderPeopleSheets example------------
-<section id="people-sheets" class="people-sheets">
-    <h1 class="sheets-title">List of people</h1>
-    <div class="sheets-key">
-        <span class="sheets-name">Name</span>
-    </div>
-    <div class="sheets-key">
-        <span class="sheets-birth">Birth date</span>
-    </div>
-    <div class="sheets-value">
-        <span class="sheets-user">Ikaro</span>
-        <span class="sheets-user">Ikaro</span>
-    </div>
-    <div class="sheets-value">
-        <span class="sheets-date">18/05/2000</span>
-        <span class="sheets-date">18/05/2000</span>
-    </div>
-</section> */
+    editDiv.classList.add("edit-button");
+    editButton.innerText = "Edit Value";
+    editDiv.appendChild(editButton);
+    section.appendChild(editDiv);
+}

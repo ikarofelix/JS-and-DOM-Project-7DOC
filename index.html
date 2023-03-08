@@ -13,14 +13,14 @@
     <body>
         <section id="section-form">
             <h1>Sign up</h1>
-            <form action="#" class="form js-form">
+            <form action="/" class="form js-form">
                 <label for="name">
                     Name
-                    <input oninvalid="checkNameValidity()" class="form-field js-field" id="name" minlength="3" maxlength="120" pattern="[A-Za-z]+" name="name" required type="text" title="Enter your first name">
+                    <input oninvalid="checkNameValidity()" class="form-field js-field" id="name" minlength="3" maxlength="120" pattern="[A-Za-z]+" required type="text" title="Enter your first name">
                 </label>
                 <label for="birth-date">
                     Birth date
-                    <input min='1899-01-01' class="form-field js-field" id="birth-date" name="birth-date" required type="date" title="Select your birth date">
+                    <input min='1899-01-01' class="form-field js-field" id="birth-date" required type="date" title="Select your birth date">
                 </label>
                 <button type="submit">Save</button>
             </form>
