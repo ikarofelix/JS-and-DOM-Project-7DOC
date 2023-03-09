@@ -52,14 +52,18 @@
     margin:auto;
     grid-column: title;
     margin-top:30px;
+    display:flex;
+    gap:30px;
 }
 
-.edit-button button{
+.edit-button button,
+.delete-button button{
     background:rgb(169, 169, 184);
     border:0;
     padding:15px;
     cursor:pointer;
     border-radius:8px;
+    width:150px;
 }
 
 .sheets-user::before{

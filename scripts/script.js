@@ -18,7 +18,8 @@ function pageStart(){
 }
 
 const sheetsUser = document.querySelectorAll(".sheets-user"),
-      editBtn = document.querySelector(".edit-button");
+      editBtn = document.querySelector("#edit-button"),
+      deleteBtn = document.querySelector("#delete-button");
 
 sheetsUser.forEach(element=>{
     element.addEventListener("click", ()=>{
@@ -35,7 +36,8 @@ sheetsUser.forEach(element=>{
     }})
 })
 
-editBtn.addEventListener("click", ()=>{
+try {
+    editBtn.addEventListener("click", ()=>{
     const active = document.querySelector(".active")
     if (!active){
         alert("You must choose one person to edit it's values")
@@ -50,7 +52,30 @@ editBtn.addEventListener("click", ()=>{
             }
         })
     }
-})
+})} catch{}
+
+try {
+    deleteBtn.addEventListener("click", ()=>{
+    const active = document.querySelector(".active")
+    if (!active){
+        alert("You must choose one person to delete it's values")
+    } else{
+        const textToEdit = (active.innerText)   
+        getLocalStor().forEach(person=>{
+            if (person.name.toLowerCase() === textToEdit.toLowerCase()){
+                edit = true;
+                editValue = person.name;
+                deleteLocalStor(editValue, editIndex)
+                location.reload()
+            }
+        })
+    }
+})}catch{}
+
+try{
+    if (document.querySelector(".sheets-value").childNodes.length<1){
+    document.querySelector("#people-sheets").remove()
+}}catch{}
 
 form.addEventListener("submit", (e)=>{
     const person = {"name":nameInput.value, "birthDate":birthDate.value}
@@ -114,6 +139,17 @@ function editLocalStor(person, str, index){
     localStorage.setItem("peopleSheets", JSON.stringify(array));
 }
 
+function deleteLocalStor(str, index){
+    const array = [];
+    getLocalStor().forEach(p=>{
+        array.push(p);
+        if (p.name === str & array.indexOf(p) === index){
+            array.splice(array.indexOf(p), 1);
+        }
+    })
+    localStorage.setItem("peopleSheets", JSON.stringify(array));
+}
+
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -124,16 +160,17 @@ function reformatBirth(str){
 
 function renderPeopleSheets(){
     const section = document.createElement("section"),
-          h1 = document.createElement("h1"),
-          divName = document.createElement("div"),
-          spanName = document.createElement("span"),
-          divBirth = document.createElement("div"),
-          spanBirth = document.createElement("span"),
-          sheetsNameValue = document.createElement("div"),
-          sheetsBirthValue = document.createElement("div"),
-          peopleSheetsReturn = getLocalStor(),
-          editDiv = document.createElement("div"),
-          editButton = document.createElement("button");
+        h1 = document.createElement("h1"),
+        divName = document.createElement("div"),
+        spanName = document.createElement("span"),
+        divBirth = document.createElement("div"),
+        spanBirth = document.createElement("span"),
+        sheetsNameValue = document.createElement("div"),
+        sheetsBirthValue = document.createElement("div"),
+        peopleSheetsReturn = getLocalStor(),
+        btnDiv = document.createElement("div"),
+        editButton = document.createElement("button"),
+        deleteButton = document.createElement("button");
 
     section.id = "people-sheets";
     section.classList.add("people-sheets");
@@ -160,7 +197,7 @@ function renderPeopleSheets(){
     
     peopleSheetsReturn.forEach(person => {
         const personName = document.createElement("span"),
-              personBirth = document.createElement("span");
+            personBirth = document.createElement("span");
 
         personName.innerText = capitalizeFirstLetter(person.name);
         personName.classList.add("sheets-user");
@@ -174,8 +211,13 @@ function renderPeopleSheets(){
     section.appendChild(sheetsNameValue);
     section.appendChild(sheetsBirthValue);
 
-    editDiv.classList.add("edit-button");
+    btnDiv.classList.add("edit-button");
+    editButton.id = "edit-button";
     editButton.innerText = "Edit Value";
-    editDiv.appendChild(editButton);
-    section.appendChild(editDiv);
+    btnDiv.appendChild(editButton);
+    
+    deleteButton.id = "delete-button";
+    deleteButton.innerText = "Delete Value";
+    btnDiv.appendChild(deleteButton);
+    section.appendChild(btnDiv);
 }
