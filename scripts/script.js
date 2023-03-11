@@ -11,9 +11,10 @@ let edit = false,
 window.onload = pageStart()
 
 function pageStart(){
-    if (getLocalStor().length>0){
-        renderPeopleSheets()
-    }
+    if (getLocalStor()){
+        if (getLocalStor().length>0){
+            renderPeopleSheets()
+    }}
     birthDateMax()
 }
 
