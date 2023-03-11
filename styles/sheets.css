@@ -1,4 +1,4 @@
-.people-sheets{
+/* .people-sheets{
     display:grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 40px repeat(1fr 1fr);
@@ -88,4 +88,150 @@
     position:absolute;
     margin-top:2px;
     left:2px;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* <section class="sheet-section">
+    <div class="sheet-key-titles">
+        <div class="sheet-title full-name">
+            <h3>Full Name</h3>
+        </div>
+        <div class="sheet-title birthday">
+            <h3>Birthday</h3>
+        </div>
+        <div class="sheet-title options">
+            <h3>Options</h3>
+        </div>
+    </div>
+
+
+    <div class="sheet">
+        <div class="sheet-value">
+            <div class="sheet-name">
+                <label>Ikaro Felix Mendes Pinheiro</label>
+            </div>
+            <div class="sheet-birth">
+                <label>25-06-2002</label>
+            </div>
+            <div class="sheet-options">
+                <div class="sheet-edit">
+                    <a href="#edit">
+                        <span>Edit</span>
+                    </a>
+                </div>
+                <div class="sheet-delete">
+                    <a href="#delete">
+                        <span>Delete</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> */
+
+
+
+
+
+
+
+.sheet-section{
+    display:grid;
+    grid-template-columns:1fr 1fr 130px;
+    grid-template-rows: 40px 1fr;
+
+    width:1200px;
+    margin:auto;
+    position:relative;
+    top:150px;
+}
+
+.sheet-key-titles{
+    grid-column: 1/4;
+    display:grid;
+    grid-template-columns: 1fr 1fr 131px;
+}
+
+.sheet-title{
+    margin-left: 10px;
+}
+
+.birthday{
+    margin-left:20px;
+}
+
+
+
+
+
+.sheet{
+    grid-column:1/5;
+    display:grid;
+    grid-template-columns: 1fr 1fr 130px;    
+    background: var(--third-color);
+    box-shadow: 0px 0px 19px 1px rgba(123, 89, 219, 0.25);
+}
+
+.sheet-value{
+    grid-column:1/5;
+    display:grid;
+    grid-template-columns: 1fr 1fr 130px;
+    padding-top:10px;
+    padding-bottom:10px;
+    border:1px solid var(--second-color);
+}
+
+.sheet-options{
+    display:flex;
+    gap:30px;
+    align-items: center;
+}
+
+.value{
+    display:flex;
+    align-items: center;
+    padding-left:10px;
+}
+
+.sheet-name{
+    width:max(540px);
+    overflow:auto;
+}
+
+.sheet-birth,
+.sheet-options{
+    border-left:1px solid var(--second-color);
+}
+
+.sheet-edit a{
+    color:rgb(0, 255, 0);
+}
+
+.sheet-delete a{
+    color:rgb(255, 0, 157);
 }

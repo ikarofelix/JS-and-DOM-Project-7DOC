@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="/styles/styles.css">
         <title>7DaysOfCode - JavaScript and DOM</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,20 +12,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
     </head>
     <body>
-        <section id="section-form">
-            <h1>Sign up</h1>
-            <form action="/" class="form js-form">
-                <label for="name">
-                    Name
-                    <input oninvalid="checkNameValidity()" class="form-field js-field" id="name" minlength="3" maxlength="120" pattern="[A-Za-z]+" required type="text" title="Enter your first name">
-                </label>
-                <label for="birth-date">
-                    Birth date
-                    <input min='1899-01-01' class="form-field js-field" id="birth-date" required type="date" title="Select your birth date">
-                </label>
-                <button type="submit">Save</button>
-            </form>
-        </section>
+        <div>
+            <h1 class="page-title"><a href="./">Birthdays</a></h1>
+        </div>
+        <form action="/" class="form js-form">
+            <label for="name">
+                Name
+                <input oninvalid="checkNameValidity()" class="form-field" id="name" maxlength="120" pattern="([A-z-À-ž\s]){3,}" required type="text" title="Enter the name">
+            </label>
+            <label for="birth-date">
+                Birth date
+                <input min='1899-01-01' class="form-field" id="birth-date" required type="date" title="Select the birth date">
+            </label>
+            <button type="submit">Save</button>
+        </form>
+        <main class="sheet-section">
+        </main>
     </body>
     <script src="/scripts/script.js"></script>
 </html>

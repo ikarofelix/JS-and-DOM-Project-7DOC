@@ -11,74 +11,46 @@ let edit = false,
 window.onload = pageStart()
 
 function pageStart(){
-    if (getLocalStor()){
+    if (getLocalStor().length>0){
         renderPeopleSheets()
     }
     birthDateMax()
 }
 
-const sheetsUser = document.querySelectorAll(".sheets-user"),
-      editBtn = document.querySelector("#edit-button"),
-      deleteBtn = document.querySelector("#delete-button");
+const sheetValue = document.querySelectorAll(".sheet-value");
 
-sheetsUser.forEach(element=>{
-    element.addEventListener("click", ()=>{
-        if (element.classList.contains("active")){
-            element.classList.remove("active","checkmark")
-        } else{
-        element.classList.add("active", "checkmark")
-        editIndex = Array.prototype.slice.call(sheetsUser).indexOf(element);
-        sheetsUser.forEach(e=>{
-            if (e!=element & e.classList.contains("active")){
-                e.classList.remove("active","checkmark")
-            }
-        })
-    }})
-})
-
-try {
-    editBtn.addEventListener("click", ()=>{
-    const active = document.querySelector(".active")
-    if (!active){
-        alert("You must choose one person to edit it's values")
-    } else{
-        const textToEdit = (active.innerText)   
+sheetValue.forEach(editOption=>{
+    editOption.querySelector(".sheet-edit").addEventListener("click",()=>{
+        const personIndex = Array.prototype.slice.call(sheetValue).indexOf(editOption);
+        const personName = editOption.querySelector(".sheet-name").querySelector("label").textContent;
+        edit = true;
+        editValue = personName.toLowerCase();
+        editIndex = personIndex;
         getLocalStor().forEach(person=>{
-            if (person.name.toLowerCase() === textToEdit.toLowerCase()){
+            if (person.name === editValue){
                 nameInput.value = person.name;
                 birthDate.value = person.birthDate;
-                edit = true;
-                editValue = person.name;
             }
         })
-    }
-})} catch{}
+    })
+    
+})
 
-try {
-    deleteBtn.addEventListener("click", ()=>{
-    const active = document.querySelector(".active")
-    if (!active){
-        alert("You must choose one person to delete it's values")
-    } else{
-        const textToEdit = (active.innerText)   
+sheetValue.forEach(element=>{
+    element.querySelector(".sheet-delete").addEventListener("click",()=>{
+        const personIndex = Array.prototype.slice.call(sheetValue).indexOf(element);
+        const personName = element.querySelector(".sheet-name").querySelector("label").textContent;
         getLocalStor().forEach(person=>{
-            if (person.name.toLowerCase() === textToEdit.toLowerCase()){
-                edit = true;
-                editValue = person.name;
-                deleteLocalStor(editValue, editIndex)
-                location.reload()
+            if (person.name === personName.toLowerCase()){
+                deleteLocalStor(personName.toLowerCase(), personIndex)
             }
         })
-    }
-})}catch{}
+    })
+    
+})
 
-try{
-    if (document.querySelector(".sheets-value").childNodes.length<1){
-    document.querySelector("#people-sheets").remove()
-}}catch{}
-
-form.addEventListener("submit", (e)=>{
-    const person = {"name":nameInput.value, "birthDate":birthDate.value}
+form.addEventListener("submit", ()=>{
+    const person = {"name":nameInput.value.toLowerCase(), "birthDate":birthDate.value}
     if (!edit){
         setToLocalStor(person)
     } else{
@@ -88,7 +60,7 @@ form.addEventListener("submit", (e)=>{
 
 function checkNameValidity(){
     if (nameInput.validity.patternMismatch || nameInput.validity.tooShort){
-        nameInput.setCustomValidity("First name");
+        nameInput.setCustomValidity("Only name");
     } else{
         nameInput.setCustomValidity("");
     }
@@ -148,10 +120,11 @@ function deleteLocalStor(str, index){
         }
     })
     localStorage.setItem("peopleSheets", JSON.stringify(array));
+    window.location.reload()
 }
 
 function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.replace(/\b\w/g, x => x.toUpperCase())
 }
 
 function reformatBirth(str){
@@ -159,65 +132,99 @@ function reformatBirth(str){
 }
 
 function renderPeopleSheets(){
-    const section = document.createElement("section"),
-        h1 = document.createElement("h1"),
-        divName = document.createElement("div"),
-        spanName = document.createElement("span"),
-        divBirth = document.createElement("div"),
-        spanBirth = document.createElement("span"),
-        sheetsNameValue = document.createElement("div"),
-        sheetsBirthValue = document.createElement("div"),
-        peopleSheetsReturn = getLocalStor(),
-        btnDiv = document.createElement("div"),
-        editButton = document.createElement("button"),
-        deleteButton = document.createElement("button");
+    // Selects the <main> element with the class "sheet-section"
+    const main = document.querySelector("main");
+    main.classList.add("sheet-section");
 
-    section.id = "people-sheets";
-    section.classList.add("people-sheets");
-    body.appendChild(section);
+    // Creates the <div> element with the class "sheet-key-titles"
+    const div1 = document.createElement("div");
+    div1.classList.add("sheet-key-titles");
 
-    h1.classList.add("sheets-title");
-    h1.innerText = "List of people";
-    section.appendChild(h1);
+    // Creates the first title
+    const div2 = document.createElement("div");
+    div2.classList.add("sheet-title", "full-name");
+    const h3_1 = document.createElement("h3");
+    h3_1.textContent = "Full Name";
+    div2.appendChild(h3_1);
 
-    divName.classList.add("sheets-key");
-    spanName.innerText = "Name";
-    spanName.classList.add("sheets-name");
-    divName.appendChild(spanName);
-    section.appendChild(divName);
+    // Creates the second title
+    const div3 = document.createElement("div");
+    div3.classList.add("sheet-title", "birthday");
+    const h3_2 = document.createElement("h3");
+    h3_2.textContent = "Birthday";
+    div3.appendChild(h3_2);
 
-    divBirth.classList.add("sheets-key");
-    spanBirth.innerText = "Birth date";
-    spanBirth.classList.add("sheets-birth");
-    divBirth.appendChild(spanBirth);
-    section.appendChild(divBirth);
+    // Creates the third title
+    const div4 = document.createElement("div");
+    div4.classList.add("sheet-title", "options");
+    const h3_3 = document.createElement("h3");
+    h3_3.textContent = "Options";
+    div4.appendChild(h3_3);
 
-    sheetsNameValue.classList.add("sheets-value");
-    sheetsBirthValue.classList.add("sheets-value");
-    
-    peopleSheetsReturn.forEach(person => {
-        const personName = document.createElement("span"),
-            personBirth = document.createElement("span");
+    // Adds the titles to the first created <div>
+    div1.appendChild(div2);
+    div1.appendChild(div3);
+    div1.appendChild(div4);
 
-        personName.innerText = capitalizeFirstLetter(person.name);
-        personName.classList.add("sheets-user");
-        sheetsNameValue.appendChild(personName);
+    // Creates the second <div> with the class "sheet"
+    const div5 = document.createElement("div");
+    div5.classList.add("sheet");
 
-        personBirth.innerText = reformatBirth(person.birthDate);
-        personBirth.classList.add("sheets-date");
-        sheetsBirthValue.appendChild(personBirth);
+    getLocalStor().forEach(person => {
+        // Creates the <div> element with the class "sheet-value"
+        const div6 = document.createElement("div");
+        div6.classList.add("sheet-value");
+
+        const div7 = document.createElement("div");
+        div7.classList.add("sheet-name", "value");
+        const label1 = document.createElement("label");
+        label1.textContent = capitalizeFirstLetter(person.name);
+        div7.appendChild(label1);
+
+        // Creates the second value
+        const div8 = document.createElement("div");
+        div8.classList.add("sheet-birth", "value");
+        const label2 = document.createElement("label");
+        label2.textContent = reformatBirth(person.birthDate);
+        div8.appendChild(label2);
+
+        // Creates the third value
+        const div9 = document.createElement("div");
+        div9.classList.add("sheet-options", "value");
+
+        // Creates the element for editing
+        const div10 = document.createElement("div");
+        div10.classList.add("sheet-edit");
+        const a1 = document.createElement("a");
+        a1.href = "#edit";
+        const span1 = document.createElement("span");
+        span1.textContent = "Edit";
+        a1.appendChild(span1);
+        div10.appendChild(a1);
+
+        // Creates the element for deleting
+        const div11 = document.createElement("div");
+        div11.classList.add("sheet-delete");
+        const a2 = document.createElement("a");
+        a2.href = "#delete";
+        const span2 = document.createElement("span");
+        span2.textContent = "Delete";
+        a2.appendChild(span2);
+        div11.appendChild(a2);
+
+        // Adds the edit and delete elements to the third value
+        div9.appendChild(div10);
+        div9.appendChild(div11);
+
+        // Adds the values to the second created <div>
+        div6.appendChild(div7);
+        div6.appendChild(div8);
+        div6.appendChild(div9);
+
+        div5.appendChild(div6);
     });
 
-    section.appendChild(sheetsNameValue);
-    section.appendChild(sheetsBirthValue);
-
-    btnDiv.classList.add("edit-button");
-    editButton.id = "edit-button";
-    editButton.innerText = "Edit Value";
-    btnDiv.appendChild(editButton);
-    
-    deleteButton.id = "delete-button";
-    deleteButton.innerText = "Delete Value";
-    btnDiv.appendChild(deleteButton);
-    section.appendChild(btnDiv);
+    // Adds the first and second created <div> to the <main> element
+    main.appendChild(div1);
+    main.appendChild(div5);
 }

@@ -10,10 +10,18 @@
     text-decoration: none;
 }
 
+:root{
+    --first-color:#1F1351;
+    --second-color:#7B59DB;
+    --third-color:#5109EC;
+}
+
 html{
     margin:0;
     padding:0;
     scroll-behavior: smooth;
+    background:var(--first-color);
+    color:white;
 }
 
 body{
